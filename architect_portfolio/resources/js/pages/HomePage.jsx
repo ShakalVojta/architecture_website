@@ -1,7 +1,10 @@
+import ProjectList from "../components/ProjectList.jsx";
 
 const HomePage = () => {
     return(
-        <div>This is Homepage</div>
+        <div>
+            <ProjectList />
+        </div>
     )
 };
 

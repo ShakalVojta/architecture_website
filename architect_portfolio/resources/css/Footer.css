@@ -1,0 +1,33 @@
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    font-family: 'Helvetica Light', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    width: 83%;
+    margin: 3rem auto 2rem auto;
+}
+
+.footer-left,
+.footer-right {
+    padding: 0 20px;
+}
+
+.footer-left {
+    text-align: left;
+}
+
+.footer-right {
+    text-align: right;
+}
+
+.footer-right a {
+    color: black;
+    text-decoration: none;
+}
+
+.footer-right a:hover {
+    text-decoration: underline;
+}
