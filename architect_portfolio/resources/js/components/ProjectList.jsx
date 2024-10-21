@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'; // Import Link
 import '../../css/ProjectList.css';
 
 const ProjectList = () => {
     const [projects, setProjects] = useState([]);
 
     useEffect(() => {
-        axios.get('/api/projects')
+        axios.get('api/projects')
             .then(response => {
                 setProjects(response.data);
             })
@@ -19,16 +20,19 @@ const ProjectList = () => {
         <div className="project-list">
             {projects.map((project) => (
                 <div key={project.id} className="project-item">
-                    <a href={`/projects/${project.id}`}>
+                    {/* Používáme Link místo <a> */}
+                    <Link to={`/projects/${project.id}`}>
                         <div className="project-image-wrapper">
-                            <img src={project.cover_image.replace('storage/app/public/', '/storage/')}
-                                 alt={project.title} className="project-image"/>
+                            <img
+                                src={project.cover_image.replace('storage/app/public/', '/storage/')}
+                                alt={project.title}
+                                className="project-image"
+                            />
                             <div className="overlay">
-                                <div className="text">Více o projektu</div>
+                                <div className="text">{project.title}</div>
                             </div>
                         </div>
-                        <h3>{project.title}</h3>
-                    </a>
+                    </Link>
                 </div>
             ))}
         </div>
