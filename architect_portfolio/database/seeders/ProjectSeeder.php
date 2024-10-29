@@ -303,33 +303,23 @@ class ProjectSeeder extends Seeder
         ];
 
         foreach ($projects as $projectData) {
-            $project = Project::create([
-                'title' => $projectData['title'],
-                'full_title' => $projectData['full_title'],
-                'location' => $projectData['location'] ?? '',
-                'author' => $projectData['author'] ?? 'Neznámý autor',
-                'phase' => $projectData['phase'] ?? null,
-                'rating' => $projectData['rating'] ?? null,
-                'project_type' => $projectData['project_type'] ?? '',
-                'annotation' => $projectData['annotation'] ?? '',
-                'description' => $projectData['description'] ?? '',
-                'scope_of_work' => $projectData['scope_of_work'] ?? null,
-                'date' => $projectData['date'] ?? null,
-                'cover_image' => $projectData['cover_image'] ?? ''
-            ]);
-                $imagesFolder = storage_path('app/public/images/' . $projectData['images_folder']);
-                if (File::exists($imagesFolder)) {
-                    $images = File::files($imagesFolder);
-
-                    foreach ($images as $image) {
-                        $imageName = basename($image);
-                        ProjectImage::create([
-                            'project_id' => $project->id,
-                            'image_path' => "storage/images/{$projectData['images_folder']}/{$imageName}"
-                        ]);
-                    }
-                }
-            }
+            $project = Project::firstOrCreate(
+                ['title' => $projectData['title']],
+                [
+                    'full_title' => $projectData['full_title'],
+                    'location' => $projectData['location'] ?? '',
+                    'author' => $projectData['author'] ?? 'Neznámý autor',
+                    'phase' => $projectData['phase'] ?? null,
+                    'rating' => $projectData['rating'] ?? null,
+                    'project_type' => $projectData['project_type'] ?? '',
+                    'annotation' => $projectData['annotation'] ?? '',
+                    'description' => $projectData['description'] ?? '',
+                    'scope_of_work' => $projectData['scope_of_work'] ?? null,
+                    'date' => $projectData['date'] ?? null,
+                    'cover_image' => $projectData['cover_image'] ?? ''
+                ]
+            );
+        }
         }
 }
 

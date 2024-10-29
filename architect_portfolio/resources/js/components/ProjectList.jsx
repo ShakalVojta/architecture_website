@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link } from 'react-router-dom';
 import '../../css/ProjectList.css';
 
 const ProjectList = () => {
@@ -20,7 +20,6 @@ const ProjectList = () => {
         <div className="project-list">
             {projects.map((project) => (
                 <div key={project.id} className="project-item">
-                    {/* Používáme Link místo <a> */}
                     <Link to={`/projects/${project.id}`}>
                         <div className="project-image-wrapper">
                             <img

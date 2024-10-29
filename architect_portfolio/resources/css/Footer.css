@@ -11,6 +11,7 @@ footer {
 }
 
 .footer-left,
+.footer-center,
 .footer-right {
     padding: 0 20px;
 }
@@ -23,11 +24,17 @@ footer {
     text-align: right;
 }
 
-.footer-right a {
+.footer-center {
+    text-align: center;
+}
+
+.footer-right a,
+.footer-center a{
     color: black;
     text-decoration: none;
 }
 
-.footer-right a:hover {
+.footer-right a:hover,
+.footer-center a:hover{
     text-decoration: underline;
 }

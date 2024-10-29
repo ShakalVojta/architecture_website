@@ -1,6 +1,5 @@
+
 header {
-
-
     padding-top: 2rem;
     padding-bottom: 2rem;
     margin: 0 auto;
@@ -19,36 +18,31 @@ header {
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
-
 }
 
 .header-left h1 {
     margin: 0;
     font-family: 'Helvetica Light', sans-serif;
     font-size: 50px;
-    font-weight: 300;
+    font-weight: 100;
 }
 
 .header-right {
-    font-size: 24px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
-.menu-open {
-    font-size: 50px;
+.menu-open, .menu-close {
+    font-size: 40px;
     font-weight: 200;
     cursor: pointer;
-    z-index: 1001;
 }
 
 .menu-close {
-    font-size: 46px;
-    font-weight: 200;
-    position: fixed;
-    right: 20px;
-    top: 20px;
-    cursor: pointer;
-    z-index: 1002;
+    position: absolute;
+    font-size: 50px;
+    z-index: 10000;
 }
 
 .side-menu {
@@ -67,19 +61,22 @@ header {
 
 .side-menu.open {
     right: 0;
+    width: 500px;
+    display: flex;
+    justify-content: left;
 }
-
+.side-menu-container {
+    display: flex;
+    margin-top: 4rem;
+}
 .menu-content {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding-right: 5rem;
-    padding-left: 2rem;
-    padding-top: 4rem;
+    gap: 2rem;
     font-family: 'Helvetica Light', sans-serif;
     font-size: 16px;
-    gap: 10rem;
     text-align: right;
+    margin-left: 8.6rem;
 
 }
 
@@ -104,6 +101,20 @@ header {
     margin-top: 20px;
     font-weight: 200;
 }
+
+.profile-picture {
+    height: 200px;
+    margin-bottom: 1rem;
+}
+
+.arrow-icon {
+    fill: black;
+}
+
+.arrow-icon:hover {
+    fill: #888;
+}
+
 @media (max-width: 1024px) {
     .header-container {
         width: 80%;

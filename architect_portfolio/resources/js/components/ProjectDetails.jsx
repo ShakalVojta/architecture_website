@@ -50,7 +50,6 @@ const ProjectDetails = () => {
                             {project.description && <p><strong>Popis:</strong> {project.description}</p>}
                         </div>
                     </div>
-                    {/* Předáme ID projektu do komponenty ProjectCarousel */}
                     <ProjectCarousel projectId={id} />
                 </div>
             </div>
