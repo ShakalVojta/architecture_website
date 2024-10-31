@@ -1,13 +1,11 @@
 import AdminNav from "../admin/AdminNav.jsx";
-import ProjectForm from "../admin/ProjectForm.jsx";
-import AddProject from "../admin/AddProject.jsx";
+import SideBar from "../admin/SideBar.jsx";
 
 const AdminPage = () => {
     return (
         <div>
             <AdminNav />
-            <ProjectForm />
-            <AddProject />
+            <SideBar />
         </div>
     );
 }

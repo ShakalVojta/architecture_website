@@ -1,0 +1,101 @@
+.add-project {
+    padding: 20px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Helvetica Light', sans-serif;
+}
+
+.add-project h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-group input[type="file"] {
+    display: block;
+    margin-top: 3px;
+    padding: 6px;
+    border: 1px dashed #ddd;
+    border-radius: 4px;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+.add-project button[type="submit"] {
+    margin-top: 15px;
+    padding: 8px 16px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    width: auto;
+}
+
+.add-project button[type="submit"]:hover {
+    background-color: #555;
+}
+
+@media (min-width: 768px) {
+    .add-project form {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .form-group:has(textarea),
+    .form-group:has(input[type="file"]) {
+        grid-column: 1 / -1;
+    }
+}
+
+.image-preview {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.image-preview img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 3px;
+}

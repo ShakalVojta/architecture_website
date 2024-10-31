@@ -1,0 +1,19 @@
+.admin-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    font-family: 'Helvetica Light', sans-serif;
+}
+
+.admin-nav-home {
+    text-transform: uppercase;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.profile {
+ width: 40px;
+    border-radius: 50%;
+}
