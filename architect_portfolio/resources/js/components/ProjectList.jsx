@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useTextUtils } from '../contexts/TextUtilsContext';
 import '../../css/ProjectList.css';
 
 const ProjectList = () => {
     const [projects, setProjects] = useState([]);
+    const { addLineBreakBeforeLastPreposition } = useTextUtils();
 
     useEffect(() => {
         axios.get('api/projects')
@@ -28,7 +30,11 @@ const ProjectList = () => {
                                 className="project-image"
                             />
                             <div className="overlay">
-                                <div className="text">{project.title}</div>
+                                <div className="text">
+                                    {addLineBreakBeforeLastPreposition(project.title).split('\n').map((line, index) => (
+                                        <p key={index}>{line}</p>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </Link>

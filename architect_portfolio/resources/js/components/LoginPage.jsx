@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from '../services/axios.js';
+import { useAuth } from '../contexts/AuthContext';
 import '../../css/LoginPage.css';
 
 const LoginPage = () => {
@@ -8,16 +8,15 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            await axios.post('/login', {
-                email,
-                password
-            });
+        setError('');
 
-            navigate('/admin');
+        try {
+            await login({ email, password });
+            navigate('/admin/list'); // nebo kam chcete po přihlášení přesměrovat
         } catch (err) {
             setError('Neplatné přihlašovací údaje');
         }

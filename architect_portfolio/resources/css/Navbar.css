@@ -42,6 +42,7 @@ header {
 .menu-close {
     position: absolute;
     font-size: 50px;
+    font-weight: 100;
     z-index: 10000;
 }
 
@@ -61,13 +62,13 @@ header {
 
 .side-menu.open {
     right: 0;
-    width: 500px;
+    width: 503px;
     display: flex;
     justify-content: left;
 }
 .side-menu-container {
     display: flex;
-    margin-top: 4rem;
+    margin-top: 6.3rem;
 }
 .menu-content {
     display: flex;
@@ -125,7 +126,7 @@ header {
         font-size: 40px;
     }
 
-    .menu-open, .menu-close {
+    .menu-open {
         font-size: 40px;
     }
 
@@ -141,11 +142,14 @@ header {
         width: 80%;
     }
 
+    .side-menu.open {
+        width: 400px;
+    }
     .header-left h1 {
         font-size: 30px;
     }
 
-    .menu-open, .menu-close {
+    .menu-open {
         font-size: 36px;
     }
 
@@ -160,15 +164,20 @@ header {
     .header-container {
         width: 80%;
     }
-
+    .header-left {
+        width: 60%;
+    }
     .header-left h1 {
         font-size: 24px;
     }
 
-    .menu-open, .menu-close {
+    .menu-open {
         font-size: 24px;
     }
 
+    .menu-close {
+        font-size: 40px;
+    }
     .menu-content {
         padding-right: 2rem;
         padding-left: 1rem;

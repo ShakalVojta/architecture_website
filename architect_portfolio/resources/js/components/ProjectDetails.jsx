@@ -46,9 +46,7 @@ const ProjectDetails = () => {
                         {project.date && <p><strong>Datum:</strong> {formatDate(project.date)}</p>}
                         {project.scope_of_work && <p><strong>Rozsah prací:</strong> {project.scope_of_work}</p>}
                         {project.annotation && <p><strong>Anotace:</strong> {project.annotation}</p>}
-                        <div className="project-description">
-                            {project.description && <p><strong>Popis:</strong> {project.description}</p>}
-                        </div>
+                        {project.description && <p><strong>Popis:</strong> {project.description}</p>}
                     </div>
                     <ProjectCarousel projectId={id} />
                 </div>

@@ -7,27 +7,63 @@ import axios from 'axios';
 const ProjectCarousel = ({ projectId }) => {
     const [images, setImages] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [slidePercent, setSlidePercent] = useState(33.33);
+    const [key, setKey] = useState(0);
 
     useEffect(() => {
         axios.get(`/api/projects/${projectId}/images`)
             .then(response => {
-                setImages(response.data); // Očekáváme pole obrázků z API
+                setImages(response.data);
             })
             .catch(error => {
                 console.error('There was an error fetching the project images!', error);
             });
     }, [projectId]);
 
-    const handleImageClick = (image) => {
+    useEffect(() => {
+        const handleResize = () => {
+            let newSlidePercent;
+            if (window.innerWidth <= 768) {
+                newSlidePercent = 100;
+            } else if (window.innerWidth <= 1024) {
+                newSlidePercent = 50;
+            } else {
+                newSlidePercent = 33.33;
+            }
+
+            if (newSlidePercent !== slidePercent) {
+                setSlidePercent(newSlidePercent);
+                setKey(prevKey => prevKey + 1);
+            }
+        };
+
+        handleResize();
+
+        let timeoutId = null;
+        const throttledResize = () => {
+            if (timeoutId === null) {
+                timeoutId = setTimeout(() => {
+                    timeoutId = null;
+                    handleResize();
+                }, 150);
+            }
+        };
+
+        window.addEventListener('resize', throttledResize);
+        return () => {
+            window.removeEventListener('resize', throttledResize);
+            if (timeoutId) clearTimeout(timeoutId);
+        };
+    }, [slidePercent]);
+
+    const handleImageClick = (e, image) => {
+        e.preventDefault();
+        e.stopPropagation();
         setSelectedImage(image);
     };
 
     const closeModal = () => {
         setSelectedImage(null);
-    };
-
-    const stopPropagation = (e) => {
-        e.stopPropagation();
     };
 
     if (!images || images.length === 0) {
@@ -36,24 +72,44 @@ const ProjectCarousel = ({ projectId }) => {
 
     return (
         <div className="project-carousel">
-            <Carousel showThumbs={false} infiniteLoop={true} autoPlay={true}>
+            <Carousel
+                key={key}
+                showThumbs={false}
+                infiniteLoop={true}
+                autoPlay={true}
+                showIndicators={true}
+                showStatus={false}
+                centerMode={true}
+                centerSlidePercentage={slidePercent}
+                emulateTouch={true}
+                transitionTime={500}
+                preventMovementUntilSwipeScrollTolerance={true}
+                swipeScrollTolerance={50}
+                useKeyboardArrows={true}
+                interval={3000}
+            >
                 {images.map((image, index) => (
-                    <div key={index}>
-                        <img
-                            src={image}
-                            alt={`Project Image ${index + 1}`}
-                            className="carousel-image"
-                            onClick={() => handleImageClick(image)}
-                        />
+                    <div key={index} className="carousel-slide" onClick={(e) => handleImageClick(e, image.path)}>
+                        <div className="image-container">
+                            <img
+                                src={image.path}
+                                alt={`Project Image ${index + 1}`}
+                                className="carousel-image"
+                            />
+                        </div>
                     </div>
                 ))}
             </Carousel>
 
             {selectedImage && (
                 <div className="modal" onClick={closeModal}>
-                    <span className="close" onClick={closeModal}>&times;</span>
-                    <div className="modal-content-wrapper" onClick={stopPropagation}>
-                        <img className="modal-content" src={selectedImage} alt="Selected Project"/>
+                    <span className="close">&times;</span>
+                    <div className="modal-content-wrapper">
+                        <img
+                            src={selectedImage}
+                            alt="Selected Project"
+                            className="modal-content"
+                        />
                     </div>
                 </div>
             )}

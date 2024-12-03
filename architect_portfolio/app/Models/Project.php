@@ -24,7 +24,8 @@ class Project extends Model
         'description',
         'scope_of_work',
         'date',
-        'cover_image'
+        'cover_image',
+        'images_folder'
     ];
 
     public function images()

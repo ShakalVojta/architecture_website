@@ -1,28 +1,19 @@
-import { Navigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import axios from '../services/axios.js';
+import { Navigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const ProtectedRoute = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(null);
+    const { isAuthenticated, loading } = useAuth();
+    const location = useLocation();
 
-    useEffect(() => {
-        const checkAuth = async () => {
-            try {
-                await axios.get('/api/user');
-                setIsAuthenticated(true);
-            } catch (error) {
-                setIsAuthenticated(false);
-            }
-        };
+    if (location.pathname === '/login') {
+        return children;
+    }
 
-        checkAuth();
-    }, []);
-
-    if (isAuthenticated === null) {
+    if (loading) {
         return <div>Loading...</div>;
     }
 
-    return isAuthenticated ? children : <Navigate to="/login" />;
+    return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
 export default ProtectedRoute;

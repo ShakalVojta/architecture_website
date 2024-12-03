@@ -47,6 +47,7 @@ const AddProject = () => {
 
         try {
             const formDataToSend = new FormData();
+
             // Přidání všech textových polí
             Object.keys(formData).forEach(key => {
                 if (key !== 'cover_image' && key !== 'images') {
@@ -54,18 +55,23 @@ const AddProject = () => {
                 }
             });
 
-            // Přidání souborů
+            // Přidání cover image
             if (formData.cover_image) {
                 formDataToSend.append('cover_image', formData.cover_image);
             }
 
-            formData.images.forEach((image, index) => {
-                formDataToSend.append(`images[${index}]`, image);
-            });
+            // Přidání gallery images
+            if (formData.images.length > 0) {
+                formData.images.forEach((image) => {
+                    formDataToSend.append('images[]', image);
+                });
+            }
 
-            await axios.post('/api/projects', formDataToSend, {
+            // POST request s upravenou konfigurací
+            const response = await axios.post('/api/projects', formDataToSend, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    'Accept': 'application/json'
                 }
             });
 
@@ -87,11 +93,37 @@ const AddProject = () => {
             });
 
             alert('Projekt byl úspěšně přidán!');
+
         } catch (error) {
-            console.error('Chyba při přidávání projektu:', error);
-            alert('Došlo k chybě při přidávání projektu.');
+            console.error('Chyba při vytváření projektu:', error);
+
+            if (error.response?.data?.errors) {
+                const errorMessages = Object.values(error.response.data.errors).flat();
+                alert('Chyba při validaci: ' + errorMessages.join('\n'));
+            } else {
+                alert('Došlo k chybě při vytváření projektu.');
+            }
         }
     };
+
+    const handleCoverImageChange = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            setFormData(prev => ({
+                ...prev,
+                cover_image: file
+            }));
+        }
+    };
+
+    const handleImagesChange = (e) => {
+        const files = Array.from(e.target.files);
+        setFormData(prev => ({
+            ...prev,
+            images: files
+        }));
+    }
 
     return (
         <div className="add-project">
@@ -214,9 +246,14 @@ const AddProject = () => {
                     <input
                         type="file"
                         name="cover_image"
-                        onChange={handleFileChange}
+                        onChange={handleCoverImageChange}
                         accept="image/*"
                     />
+                    {formData.cover_image && (
+                        <div className="image-preview">
+                            <img src={URL.createObjectURL(formData.cover_image)} alt="Cover Preview" />
+                        </div>
+                    )}
                 </div>
 
                 <div className="form-group">
@@ -224,10 +261,15 @@ const AddProject = () => {
                     <input
                         type="file"
                         name="images"
-                        onChange={handleFileChange}
+                        onChange={handleImagesChange}
                         accept="image/*"
                         multiple
                     />
+                    <div className="image-preview">
+                        {formData.images.map((image, index) => (
+                            <img key={index} src={URL.createObjectURL(image)} alt={`Preview ${index + 1}`} />
+                        ))}
+                    </div>
                 </div>
 
                 <button type="submit">Přidat projekt</button>

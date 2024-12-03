@@ -1,70 +1,171 @@
 .project-carousel {
-    position: relative;
-    width: 70%;
+    width: 100%;
+    max-width: 1400px;  /* Přidáme maximální šířku */
     margin: 0 auto;
-    padding: 20px;
-
+    padding: 0 60px;
+    position: relative;
+    box-sizing: border-box;
 }
 
-.carousel .carousel-slider {
-    overflow: hidden;
+.carousel-slide {
+    cursor: pointer !important;
 }
 
-.carousel-image {
-    max-width: 100%;
-    max-height: 500px;
-    width: auto;
-    height: auto;
-    object-fit: cover;
-    transition: transform 0.3s ease-in-out;
-}
-
-.carousel img {
-    pointer-events: all;
-}
-
-.carousel-image:hover {
-    transform: scale(1.05);
-    cursor: pointer;
-}
-
-.modal {
+.image-container {
+    height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0 10px;
+}
+
+@media (max-width: 1024px) {
+    .image-container {
+        height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .image-container {
+        height: 250px;
+    }
+}
+
+.carousel-image {
+    width: auto !important;
+    height: 100% !important;
+    max-width: 100%;
+    object-fit: contain;
+    pointer-events: all !important;
+}
+
+/* Modal */
+.modal {
     position: fixed;
-    z-index: 1000;
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content-wrapper {
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh;
 }
 
 .modal-content {
-    display: block;
-    margin: auto;
-    max-width: 80%;
-    width: auto;
+    max-width: 100%;
+    max-height: 90vh;
     object-fit: contain;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease;
-    transform: scale(1);
 }
-
-
 
 .close {
     position: absolute;
     top: 20px;
     right: 30px;
-    color: #fff;
+    color: white;
     font-size: 40px;
     font-weight: bold;
     cursor: pointer;
+    z-index: 10000;
 }
 
-.close:hover {
-    color: #ff0000;
+/* Carousel Controls */
+.carousel.carousel-slider {
+    overflow: visible !important;
 }
 
+.carousel .slide {
+    background: none !important;
+}
+
+/* Šipky */
+.carousel .control-arrow {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.6) !important;
+    height: 60px !important;
+    width: 40px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 2;
+}
+
+.carousel .control-prev {
+    left: -50px !important;
+}
+
+.carousel .control-next {
+    right: -50px !important;
+}
+
+/* Responsivní šipky */
+@media (max-width: 1200px) {
+    .carousel .control-arrow {
+        width: 30px !important;
+    }
+
+    .carousel .control-prev {
+        left: -40px !important;
+    }
+
+    .carousel .control-next {
+        right: -40px !important;
+    }
+
+    .project-carousel {
+        padding: 0 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel .control-arrow {
+        width: 25px !important;
+    }
+
+    .carousel .control-prev {
+        left: -30px !important;
+    }
+
+    .carousel .control-next {
+        right: -30px !important;
+    }
+
+    .project-carousel {
+        padding: 0 40px;
+    }
+}
+
+/* Hover efekt */
+.carousel-slide {
+    transition: transform 0.3s ease;
+}
+
+.carousel-slide:hover {
+    transform: scale(1.02);
+}
+
+.carousel .slide * {
+    pointer-events: all !important;
+}
+
+/* Vylepšené šipky */
+.carousel .control-arrow:before {
+    border-width: 8px !important;
+    margin: 0;
+}
+
+.carousel .control-arrow:hover {
+    background: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Zajistíme, že carousel nebude přetékat */
+.carousel-slider {
+    max-width: 100%;
+    margin: 0 auto;
+}
