@@ -5,6 +5,7 @@ import '../../css/ProjectDetails.css';
 import { format } from 'date-fns';
 import { cs } from 'date-fns/locale';
 import ProjectCarousel from "./ProjectCarousel.jsx";
+import Loader from "./Loader.jsx";
 
 const ProjectDetails = () => {
     const { id } = useParams();
@@ -27,7 +28,7 @@ const ProjectDetails = () => {
     };
 
     if (!project) {
-        return <div>Loading...</div>;
+        return <Loader />;
     }
 
     return (

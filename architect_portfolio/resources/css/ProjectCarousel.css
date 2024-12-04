@@ -1,6 +1,6 @@
 .project-carousel {
     width: 100%;
-    max-width: 1400px;  /* Přidáme maximální šířku */
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 60px;
     position: relative;
@@ -76,7 +76,6 @@
     z-index: 10000;
 }
 
-/* Carousel Controls */
 .carousel.carousel-slider {
     overflow: visible !important;
 }
@@ -85,7 +84,6 @@
     background: none !important;
 }
 
-/* Šipky */
 .carousel .control-arrow {
     position: absolute;
     background: rgba(0, 0, 0, 0.6) !important;
@@ -104,7 +102,38 @@
     right: -50px !important;
 }
 
-/* Responsivní šipky */
+/* Animace při načítání obrázků */
+.carousel-image {
+    opacity: 0;
+    transform: scale(0.9);
+    animation: fadeInAndZoom 2s ease forwards; /* Zvýšili jsme délku animace na 2 sekundy */
+}
+
+.carousel .slide:nth-child(1) .carousel-image {
+    animation-delay: 0.5s; /* Zpoždění animace prvního obrázku */
+}
+
+.carousel .slide:nth-child(2) .carousel-image {
+    animation-delay: 1s; /* Zpoždění animace druhého obrázku */
+}
+
+.carousel .slide:nth-child(3) .carousel-image {
+    animation-delay: 1.5s; /* Zpoždění animace třetího obrázku */
+}
+
+/* Klíčové snímky pro fade-in a zoom animaci */
+@keyframes fadeInAndZoom {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
 @media (max-width: 1200px) {
     .carousel .control-arrow {
         width: 30px !important;
@@ -141,7 +170,6 @@
     }
 }
 
-/* Hover efekt */
 .carousel-slide {
     transition: transform 0.3s ease;
 }
@@ -154,7 +182,6 @@
     pointer-events: all !important;
 }
 
-/* Vylepšené šipky */
 .carousel .control-arrow:before {
     border-width: 8px !important;
     margin: 0;
@@ -164,7 +191,6 @@
     background: rgba(0, 0, 0, 0.8) !important;
 }
 
-/* Zajistíme, že carousel nebude přetékat */
 .carousel-slider {
     max-width: 100%;
     margin: 0 auto;
