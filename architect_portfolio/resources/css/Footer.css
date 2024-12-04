@@ -8,6 +8,22 @@ footer {
     font-size: 14px;
     width: 83%;
     margin: 3rem auto 2rem auto;
+
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInFooter 2s ease forwards;
+    animation-delay: 1.5s;
+}
+
+@keyframes fadeInFooter {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .footer-left,
@@ -29,12 +45,12 @@ footer {
 }
 
 .footer-right a,
-.footer-center a{
+.footer-center a {
     color: black;
     text-decoration: none;
 }
 
 .footer-right a:hover,
-.footer-center a:hover{
+.footer-center a:hover {
     text-decoration: underline;
 }
