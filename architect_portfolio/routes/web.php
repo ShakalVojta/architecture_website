@@ -37,6 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('api/projects/{id}/images', [ProjectController::class, 'addImages']);
     Route::put('api/projects/{id}', [ProjectController::class, 'update']);
     Route::post('api/projects', [ProjectController::class, 'store']);
+    Route::post('api/projects/reorder', [ProjectController::class, 'reorder']);
 });
 
 //SPA catch-all route

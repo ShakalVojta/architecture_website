@@ -1,0 +1,68 @@
+.project-order {
+    padding: 20px;
+}
+
+.instruction {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.projects-order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.project-order-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.project-order-item:hover {
+    background-color: #f9f9f9;
+}
+
+.project-order-item.dragging {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    background-color: #f5f5f5;
+}
+
+.drag-handle {
+    margin-right: 15px;
+    color: #666;
+    cursor: grab;
+}
+
+.project-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.project-thumbnail {
+    width: 100px;
+    height: 70px;
+    object-fit: cover;
+}
+
+.project-title {
+    font-size: 16px;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .project-thumbnail {
+        width: 80px;
+        height: 60px;
+    }
+
+    .project-title {
+        font-size: 14px;
+    }
+}

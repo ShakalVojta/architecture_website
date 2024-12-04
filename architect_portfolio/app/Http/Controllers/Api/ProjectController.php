@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Models\ProjectImage;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -16,7 +17,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::orderBy('sort_order', 'asc')->get();
         return response()->json($projects);
     }
 
@@ -44,6 +45,7 @@ class ProjectController extends Controller
     public function store(ProjectStoreRequest $request)
     {
         try {
+            $lastOrder = DB::table('projects')->max('sort_order') ?? -1;
             $projectSlug = Str::slug($request->title);
             $projectFolder = 'images/' . $projectSlug;
 
@@ -61,7 +63,8 @@ class ProjectController extends Controller
                 'description' => $request->description,
                 'scope_of_work' => $request->scope_of_work,
                 'date' => $request->date,
-                'cover_image' => 'storage/app/public/' . $coverImagePath
+                'cover_image' => 'storage/app/public/' . $coverImagePath,
+                'sort_order' => $lastOrder + 1
             ]);
 
             if ($request->hasFile('images')) {
@@ -220,6 +223,24 @@ class ProjectController extends Controller
                 'message' => 'Došlo k chybě při nahrávání obrázků',
                 'error' => $e->getMessage()
             ], 500);
+        }
+    }
+
+    public function reorder(Request $request)
+    {
+        try {
+            $request->validate([
+                'order' => 'required|array',
+                'order.*.id' => 'required|exists:projects,id',
+                'order.*.sort_order' => 'required|integer|min:0',
+            ]);
+
+            foreach ($request->order as $item) {
+                Project::where('id', $item['id'])->update(['sort_order' => $item['sort_order']]);
+            }
+            return response()->json(['message' => 'Projekty byly úspěšně seřazeny']);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Failed to update order'], 500);
         }
     }
 }

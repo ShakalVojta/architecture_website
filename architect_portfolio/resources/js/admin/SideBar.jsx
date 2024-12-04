@@ -1,7 +1,7 @@
 import '../../css/admin/Sidebar.css';
 import { NavLink } from "react-router-dom";
 import Icon from '@mdi/react';
-import { mdiPlus, mdiListBoxOutline, mdiFileEditOutline, mdiLogout } from '@mdi/js';
+import { mdiPlus, mdiListBoxOutline, mdiFileEditOutline, mdiLogout, mdiSort } from '@mdi/js';
 import { useAuth } from '../contexts/AuthContext';
 
 const SideBar = () => {
@@ -33,6 +33,10 @@ const SideBar = () => {
                           color="black"
                     />
                     <p>Upravit projekt</p>
+                </NavLink>
+                <NavLink to="/admin/order" className="sidebar-option">
+                    <Icon path={mdiSort} size={1} color="black" />
+                    <p>Pořadí projektů</p>
                 </NavLink>
             </div>
             <div className="sidebar-footer">
