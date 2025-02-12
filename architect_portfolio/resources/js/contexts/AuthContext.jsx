@@ -30,7 +30,6 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (credentials) => {
         try {
-            // Získáme CSRF token před přihlášením
             await axios.get('/sanctum/csrf-cookie');
             await axios.post('/login', credentials);
             setIsAuthenticated(true);
@@ -43,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         try {
             setIsAuthenticated(false);
-            await axios.post('/api/logout');
+            await axios.post('/logout');
             window.location.replace('/');
         } catch (error) {
             console.error('Chyba při odhlašování:', error);

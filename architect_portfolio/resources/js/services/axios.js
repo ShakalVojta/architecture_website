@@ -3,10 +3,11 @@ import axios from 'axios';
 // Základní nastavení
 const instance = axios.create({
     withCredentials: true,
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
     headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'Accept': 'application/json',
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
     }
 });
 
