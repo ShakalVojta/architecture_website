@@ -56,7 +56,7 @@ const NavBar = () => {
                         <div className="menu-content-upper">
                             <img src={photo} alt="Profile" className="profile-picture"/>
                             <p>Ing. arch. Anna Laubová</p>
-                            <p style="margin-bottom: 2rem;">ČKA 05755</p>
+                            <p style={{marginBottom: '2rem'}}>ČKA 05755</p>
                             <p>IČ: 08982279</p>
                             <p><a href="mailto:lauboann@gmail.com">lauboann@gmail.com</a></p>
                             <p><a href="https://annalaubova.com" target="_blank"
