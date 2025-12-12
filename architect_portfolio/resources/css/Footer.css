@@ -11,7 +11,7 @@ footer {
 
     opacity: 0;
     transform: translateY(20px);
-    animation: fadeInFooter 2s ease forwards;
+    animation: fadeInFooter 4s ease forwards;
     animation-delay: 1.5s;
 }
 
@@ -53,4 +53,27 @@ footer {
 .footer-right a:hover,
 .footer-center a:hover {
     text-decoration: underline;
+}
+
+@media screen and (max-width: 648px) {
+    footer {
+        flex-direction: column;
+        width: 90%;
+        margin: 2rem auto 1rem auto;
+    }
+
+    .footer-left,
+    .footer-center,
+    .footer-right {
+        width: 100%;
+        text-align: center;
+    }
+
+    .footer-left {
+        margin-bottom: 5px;
+    }
+
+    .footer-center {
+        margin-bottom: 5px;
+    }
 }

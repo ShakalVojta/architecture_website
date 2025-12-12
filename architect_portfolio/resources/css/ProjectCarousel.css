@@ -102,26 +102,24 @@
     right: -50px !important;
 }
 
-/* Animace při načítání obrázků */
 .carousel-image {
     opacity: 0;
     transform: scale(0.9);
-    animation: fadeInAndZoom 2s ease forwards; /* Zvýšili jsme délku animace na 2 sekundy */
+    animation: fadeInAndZoom 2s ease forwards;
 }
 
 .carousel .slide:nth-child(1) .carousel-image {
-    animation-delay: 0.5s; /* Zpoždění animace prvního obrázku */
+    animation-delay: 0.5s;
 }
 
 .carousel .slide:nth-child(2) .carousel-image {
-    animation-delay: 1s; /* Zpoždění animace druhého obrázku */
+    animation-delay: 1s;
 }
 
 .carousel .slide:nth-child(3) .carousel-image {
-    animation-delay: 1.5s; /* Zpoždění animace třetího obrázku */
+    animation-delay: 1.5s;
 }
 
-/* Klíčové snímky pro fade-in a zoom animaci */
 @keyframes fadeInAndZoom {
     0% {
         opacity: 0;
@@ -194,4 +192,51 @@
 .carousel-slider {
     max-width: 100%;
     margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .image-container {
+        height: 350px;
+    }
+
+    .project-carousel {
+        padding: 0 20px;
+        width: 95%;
+    }
+
+    .carousel .control-prev {
+        left: -15px !important;
+    }
+
+    .carousel .control-next {
+        right: -15px !important;
+    }
+
+    .carousel-image {
+        object-fit: contain !important;
+        max-height: 100% !important;
+        width: auto !important;
+        max-width: 100% !important;
+    }
+
+    .modal-content {
+        max-height: 80vh;
+    }
+
+    .carousel-image {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .image-container {
+        height: 300px;
+    }
+
+    .project-carousel {
+        padding: 0 10px;
+        width: 98%;
+    }
 }

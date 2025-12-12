@@ -32,12 +32,15 @@ class ProjectController extends Controller
     {
         $project = Project::with('images')->findOrFail($id);
 
-        $images = $project->images->map(function($image) {
-            return [
-                'id' => $image->id,
-                'path' => asset('storage/' . $image->image_path)
-            ];
-        });
+        $images = $project->images()
+            ->orderBy('sort_order')
+            ->get()
+            ->map(function($image) {
+                return [
+                    'id' => $image->id,
+                    'path' => '/storage/app/public/' . $image->image_path
+                ];
+            });
 
         return response()->json($images);
     }
@@ -63,7 +66,7 @@ class ProjectController extends Controller
                 'description' => $request->description,
                 'scope_of_work' => $request->scope_of_work,
                 'date' => $request->date,
-                'cover_image' => 'storage/app/public/' . $coverImagePath,
+                'cover_image' => $coverImagePath,
                 'sort_order' => $lastOrder + 1
             ]);
 
@@ -109,12 +112,12 @@ class ProjectController extends Controller
 
             if ($request->hasFile('cover_image')) {
                 if ($project->cover_image) {
-                    Storage::disk('public')->delete(str_replace('storage/app/public/', '', $project->cover_image));
+                    Storage::disk('public')->delete($project->cover_image);
                 }
 
                 $projectFolder = 'images/' . Str::slug($request->title ?? $project->title);
                 $coverImagePath = $request->file('cover_image')->store($projectFolder, 'public');
-                $updateData['cover_image'] = 'storage/app/public/' . $coverImagePath;
+                $updateData['cover_image'] = $coverImagePath;
             }
 
             $updateData = array_filter($updateData, function($value) {
@@ -143,7 +146,7 @@ class ProjectController extends Controller
             $project = Project::findOrFail($id);
 
             if ($project->cover_image) {
-                Storage::disk('public')->delete(str_replace('storage/app/public/', '', $project->cover_image));
+                Storage::disk('public')->delete($project->cover_image);
             }
 
             foreach ($project->images as $image) {
@@ -198,11 +201,11 @@ class ProjectController extends Controller
 
             if ($request->hasFile('cover_image')) {
                 if ($project->cover_image) {
-                    Storage::disk('public')->delete(str_replace('storage/app/public/', '', $project->cover_image));
+                    Storage::disk('public')->delete($project->cover_image);
                 }
 
                 $coverImagePath = $request->file('cover_image')->store($projectFolder, 'public');
-                $project->cover_image = 'storage/app/public/' . $coverImagePath;
+                $project->cover_image = $coverImagePath;
                 $project->save();
             }
 
@@ -241,6 +244,29 @@ class ProjectController extends Controller
             return response()->json(['message' => 'Projekty byly úspěšně seřazeny']);
         } catch (Exception $e) {
             return response()->json(['error' => 'Failed to update order'], 500);
+        }
+    }
+
+    public function updateImageOrder(Request $request, $id) {
+        try {
+            $request->validate([
+                'images' => 'required|array',
+                'images.*.id' => 'required|exists:project_images,id',
+                'images.*.sort_order' => 'required|integer|min:0',
+            ]);
+
+            foreach ($request->images as $image) {
+                ProjectImage::where('id', $image['id'])
+                    ->where('project_id', $id)
+                    ->update(['sort_order' => $image['sort_order']]);
+            }
+
+            return response()->json(['message' => 'Pořadí obrázků bylo úspěšně aktualizováno']);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Došlo k chybě při aktualizaci pořadí obrázků',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 }

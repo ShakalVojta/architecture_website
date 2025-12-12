@@ -251,7 +251,10 @@ const AddProject = () => {
                     />
                     {formData.cover_image && (
                         <div className="image-preview">
-                            <img src={URL.createObjectURL(formData.cover_image)} alt="Cover Preview" />
+                            <img
+                                src={URL.createObjectURL(formData.cover_image)}
+                                alt="Cover preview"
+                            />
                         </div>
                     )}
                 </div>
@@ -267,7 +270,7 @@ const AddProject = () => {
                     />
                     <div className="image-preview">
                         {formData.images.map((image, index) => (
-                            <img key={index} src={URL.createObjectURL(image)} alt={`Preview ${index + 1}`} />
+                            <img key={index} src={URL.createObjectURL(image)} alt={`Preview ${index + 1}`}/>
                         ))}
                     </div>
                 </div>

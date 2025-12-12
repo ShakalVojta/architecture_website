@@ -74,7 +74,7 @@ const ProjectOrder = () => {
                                             </div>
                                             <div className="project-info">
                                                 <img
-                                                    src={project.cover_image.replace('storage/app/public/', '/storage/')}
+                                                    src={`/storage/app/public/${project.cover_image}`}
                                                     alt={project.title}
                                                     className="project-thumbnail"
                                                 />

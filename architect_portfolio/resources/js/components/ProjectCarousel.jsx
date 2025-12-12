@@ -13,6 +13,7 @@ const ProjectCarousel = ({ projectId }) => {
     useEffect(() => {
         axios.get(`/api/projects/${projectId}/images`)
             .then(response => {
+                console.log('API response for images:', response.data);
                 setImages(response.data);
             })
             .catch(error => {
@@ -56,10 +57,10 @@ const ProjectCarousel = ({ projectId }) => {
         };
     }, [slidePercent]);
 
-    const handleImageClick = (e, image) => {
+    const handleImageClick = (e, imagePath) => {
         e.preventDefault();
         e.stopPropagation();
-        setSelectedImage(image);
+        setSelectedImage(imagePath);
     };
 
     const closeModal = () => {
@@ -75,8 +76,8 @@ const ProjectCarousel = ({ projectId }) => {
             <Carousel
                 key={key}
                 showThumbs={false}
-                infiniteLoop={true}
-                autoPlay={true}
+                infiniteLoop={false}
+                autoPlay={false}
                 showIndicators={true}
                 showStatus={false}
                 centerMode={true}
@@ -86,13 +87,12 @@ const ProjectCarousel = ({ projectId }) => {
                 preventMovementUntilSwipeScrollTolerance={true}
                 swipeScrollTolerance={50}
                 useKeyboardArrows={true}
-                interval={3000}
             >
                 {images.map((image, index) => (
                     <div key={index} className="carousel-slide" onClick={(e) => handleImageClick(e, image.path)}>
                         <div className="image-container">
                             <img
-                                src={image.path}
+                                src={image.path} // Zde použijte přímo image.path bez jakýchkoliv úprav
                                 alt={`Project Image ${index + 1}`}
                                 className="carousel-image"
                             />
@@ -106,7 +106,7 @@ const ProjectCarousel = ({ projectId }) => {
                     <span className="close">&times;</span>
                     <div className="modal-content-wrapper">
                         <img
-                            src={selectedImage}
+                            src={selectedImage} // Přímo URL bez úprav
                             alt="Selected Project"
                             className="modal-content"
                         />

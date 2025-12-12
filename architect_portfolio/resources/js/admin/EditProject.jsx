@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../services/axios';
 import '../../css/admin/EditProject.css';
+import ImageSorter from "./ImageSorter.jsx";
 
 const EditProject = () => {
     const { id } = useParams();
@@ -30,7 +31,7 @@ const EditProject = () => {
         axios.get(`/api/projects/${id}`)
             .then(response => {
 
-                const coverImagePath = response.data.cover_image?.replace('storage/app/public/', 'storage/');
+                const coverImagePath = response.data.cover_image;
                 setCurrentCoverImage(coverImagePath || '');
 
                 const processedData = Object.keys(response.data).reduce((acc, key) => {
@@ -292,9 +293,9 @@ const EditProject = () => {
                     {currentCoverImage && (
                         <div className="current-image-preview">
                             <img
-                                src={`/${currentCoverImage}`}
+                                src={`/storage/app/public/${currentCoverImage}`}
                                 alt="Current cover"
-                                style={{ maxWidth: '200px', height: 'auto' }}
+                                style={{maxWidth: '200px', height: 'auto'}}
                             />
                         </div>
                     )}
@@ -332,6 +333,14 @@ const EditProject = () => {
                             </div>
                         ))}
                     </div>
+
+                    {currentImages.length > 1 && (
+                        <ImageSorter
+                            projectId={id}
+                            currentImages={currentImages}
+                            onImagesUpdate={setCurrentImages}
+                        />
+                    )}
 
                     <label>Přidat nové obrázky do galerie:</label>
                     <input

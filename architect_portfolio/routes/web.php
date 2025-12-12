@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ProjectController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
@@ -38,6 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('api/projects/{id}', [ProjectController::class, 'update']);
     Route::post('api/projects', [ProjectController::class, 'store']);
     Route::post('api/projects/reorder', [ProjectController::class, 'reorder']);
+    Route::post('api/projects/{id}/image-order', [ProjectController::class, 'updateImageOrder']);
 });
 
 //SPA catch-all route
